@@ -1,7 +1,6 @@
 package com.learnspring.employeessystem.service;
 
-import com.learnspring.employeessystem.dao.EmployeeDAO;
-import com.learnspring.employeessystem.dao.EmployeeDAOImpl;
+import com.learnspring.employeessystem.dao.EmployeeRepository;
 import com.learnspring.employeessystem.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,38 +10,40 @@ import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-    EmployeeDAO employeeDAO;
+    EmployeeRepository employeeRepository;
 
     @Autowired
-    public EmployeeServiceImpl(EmployeeDAO employeeDAO) {
-        this.employeeDAO = employeeDAO;
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
     }
 
     @Override
     public List<Employee> findAll() {
-        return employeeDAO.findAll();
+        return employeeRepository.findAll();
     }
 
     @Override
     public Employee findById(int id) {
-        return employeeDAO.findById(id);
+        var result = employeeRepository.findById(id);
+        Employee employee = null;
+        if (result.isPresent()) {
+            employee = result.get();
+        }
+        return employee;
     }
 
     @Override
-    @Transactional
     public Employee save(Employee employee) {
-        return employeeDAO.save(employee);
+        return employeeRepository.save(employee);
     }
 
     @Override
-    @Transactional
     public Employee update(Employee employee) {
-        return employeeDAO.update(employee);
+        return employeeRepository.save(employee);
     }
 
     @Override
-    @Transactional
     public void deleteById(int id) {
-        employeeDAO.deleteById(id);
+        employeeRepository.deleteById(id);
     }
 }

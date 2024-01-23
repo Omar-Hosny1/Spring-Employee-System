@@ -1,6 +1,5 @@
 package com.learnspring.employeessystem.rest;
 
-import com.learnspring.employeessystem.dao.EmployeeDAOImpl;
 import com.learnspring.employeessystem.entity.Employee;
 import com.learnspring.employeessystem.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +52,7 @@ public class EmployeeRestController {
     }
 
     @DeleteMapping("/employees/{employeeId}")
-    public ResponseEntity<String>  deleteEmployee(@PathVariable int employeeId) {
+    public ResponseEntity<String> deleteEmployee(@PathVariable int employeeId) {
         final Employee employee = employeeService.findById(employeeId);
         if (employee == null) {
             throw new RuntimeException("No Employee Found - " + employeeId);
@@ -61,7 +60,7 @@ public class EmployeeRestController {
         System.out.println("DELETING");
         employeeService.deleteById(employeeId);
         System.out.println("DELETETED");
-        return new ResponseEntity<>("Employee with this ID Deleted Successfully - " + employeeId, HttpStatus.OK) ;
+        return new ResponseEntity<>("Employee with this ID Deleted Successfully - " + employeeId, HttpStatus.OK);
     }
 
 }
